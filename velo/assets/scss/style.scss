@@ -1,0 +1,1022 @@
+/* Eggshell */
+
+$blue: #2196F3;
+$green: #4CAF50;
+$orange: #FF9800;
+$purple: #9C27B0;
+$red: #F44336;
+$light: #ECEFF1;
+$black: #263238;
+$font: 'Roboto', Arial, sans;
+@import 'eggshell';
+/* Layout */
+
+$header: 54px;
+$width: 960px;
+$sidebar: 240px;
+@mixin card() {
+  background: #FFF;
+  border: 1px solid $line;
+  border-radius: $radius;
+  @include box-shadow(0 1px 0 rgba(0, 0, 0, 0.05));
+}
+label {
+  @include font-size($smaller);
+}
+.upload {
+  cursor: pointer;
+  position: relative;
+  input[type='file'] {
+    position: fixed;
+    top: -1000px;
+  }
+}
+table {
+  margin-bottom: 0;
+  width: 100%;
+  font-size:15px;
+  table {
+    width: auto;
+  }
+  thead {
+    color: inherit;
+    font-size: inherit;
+    tr {
+      background: tint($light, 60%);
+    }
+  }
+  tr.form-row-authors {
+    table {
+      tr {
+        td {
+          input {
+            width: 80px;
+          }
+        }
+      }
+    }
+  }
+  tr {
+    td, th {
+      &:first-child {
+        padding-left: $gutter/2;
+      }
+      &:last-child {
+        padding-right: $gutter/2;
+      }
+    }
+  }
+  td {
+    &.label {
+      @include font-size($smaller);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+  }
+  .empty {
+    border: 0 !important;
+    td, td:first-child, td:last-child {
+      background: tint($light, 60%);
+      border-radius: $radius;
+      color: $grey;
+      @include font-size();
+      padding: $gutter/2 0;
+      text-transform: none;
+    }
+  }
+  textarea {
+    @include box-sizing(border-box);
+    width: 100%;
+    resize: none;
+  }
+  table {
+    tbody {
+      tr {
+        &:first-child {
+          border-top: 0;
+          td {
+            padding-top: 0;
+          }
+        }
+        &:last-child {
+          border-bottom: 0;
+          td {
+            padding-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+  &.files {
+    &.links{
+      td{
+        &:first-child {
+         &:before {
+          @include icon;
+          content: 'e';
+          }
+         }
+       }
+     }
+    td {
+      white-space: nowrap;
+      &:first-child {
+        width: 100%;
+        padding: $gutter/2;
+        &:before {
+          @include icon;
+          content: 'm';
+          float: left;
+          @include font-size($larger);
+          margin-right: $gutter/4;
+        }
+      }
+      .delete {
+        color: $grey;
+        @include tooltip;
+        &:before {
+          @include icon;
+          content: 'x';
+        }
+        &:hover {
+          color: $red;
+        }
+      }
+
+      .edit {
+        color: $grey;
+        @include tooltip;
+        &:before {
+          @include icon;
+          content: 'b';
+        }
+        &:hover {
+          color: $blue;
+        }
+      }
+    }
+    .uploading {
+      td:first-child {
+        &:before {
+          content: 'L';
+          @include spin(1.2s);
+        }
+      }
+    }
+  }
+}
+.loading {
+  &:before {
+    background: #FFF;
+  }
+}
+/* Status */
+
+&.status {
+  @include font-size($smaller);
+  font-weight: normal;
+  text-transform: uppercase;
+  &:before {
+    @include icon;
+    @include font-size();
+    margin-right: $gutter/4;
+    vertical-align: bottom;
+  }
+  &.draft {
+    border-color: $grey;
+    color: $grey;
+    &:before {
+      content: 'b';
+    }
+  }
+  &.submitted {
+    border-color: $orange;
+    color: $orange;
+    &:before {
+      content: 's';
+    }
+  }
+  &.processed {
+    border-color: $purple;
+    color: $purple;
+    &:before {
+      content: 'p';
+    }
+  }
+  &.accepted {
+    border-color: $green;
+    color: $green;
+    &:before {
+      content: 'a';
+    }
+  }
+  &.closed {
+    border-color: $black;
+    color: $black;
+    &:before {
+      content: 'c';
+    }
+  }
+}
+/* GENERAL */
+
+body {
+  background: $light;
+  color: tint($black, 20%);
+  font-weight: 300;
+  text-align: center;
+  letter-spacing: 0.5px;
+  min-width: 960px;
+}
+.select {
+  &:after {
+    top: $gutter/5;
+    font-size: 20px;
+    right: 5px;
+  }
+}
+.button {
+  font-weight: normal;
+  letter-spacing: .5px;
+}
+input:not([type=submit]), textarea {
+  padding: 4px $gutter/2;
+}
+.select select {
+  padding: 4px 30px 4px 10px;
+}
+.button.add, a.button.add, button.button.add, .button, a.button, button.button {
+  padding: 4px $gutter/2;
+}
+/* MENU */
+
+#header {
+  background: #FFF;
+  border-bottom: 1px solid $line;
+  @include box-shadow(0 2px 1px rgba(0, 0, 0, 0.05));
+  color: tint($black, 40%);
+  font-weight: normal;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 9999;
+  min-width: 960px;
+  a {
+    color: inherit;
+    display: block;
+    float: left;
+    padding: 1.5*$gutter/2 $gutter;
+    &:hover, &:active, &.active {
+      background: tint($light, 60%);
+      color: $black;
+    }
+    &:before {
+      @include icon;
+      margin-right: $gutter/4;
+    }
+  }
+  .home {
+    span {
+      display: none;
+    }
+    &:before {
+      content: 'h';
+      margin: 0;
+    }
+  }
+  .links {
+    // .deposits:before {
+    //   content: 'd';
+    // }
+    // a{
+    //   &:last-child{
+    //     border-right:1px solid $line;
+    //   }    
+    //   border-left:1px solid $line;
+    // }
+    .help:before {
+      content: '?';
+    }
+  }
+  .user {
+    a {
+      float: right;
+    }
+    .username {
+      display: block;
+      float: right;
+      padding: 1.5*$gutter/2;
+    }
+    .logout {
+      span {
+        display: none;
+      }
+      &:before {
+        content: 'l';
+        margin: 0;
+      }
+    }
+  }
+}
+/* main */
+
+.main {
+  @include box-sizing(border-box);
+  margin: 0 auto;
+  max-width: $width;
+  padding: 70px 0 2*$gutter;
+  position: relative;
+  text-align: left;
+  .toolbar {
+    float: left;
+    width: 100%;
+    margin-bottom: $gutter*1.5;
+    height: $gutter*2.5+4;
+    form {
+      span {
+        display: inline-block;
+        position: relative;
+        margin-right: 3px;
+        padding: 0 $gutter/2;
+        cursor: pointer;
+        border: 1px solid rgba(236, 239, 241, 1);
+        border-radius: $radius;
+        background: rgba(236, 239, 241, 1);
+        white-space: nowrap;
+        line-height: $gutter+4;
+        font-size: 1.2em;
+        @include transition(all, 0.1s, ease);
+        @include box-sizing(border-box);
+        input {
+          display: inline-block;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0px;
+          left: 0px;
+          opacity: 0;
+          cursor: pointer;
+        }
+        label {
+          display: inline-block;
+          font-size: 12px;
+          text-align: center;
+          width: 100%;
+        }
+        &:hover {
+          background: rgba(236, 239, 241, .6);
+        }
+        &:last-child {
+          margin-right: 0px
+        }
+        &.label-reopen {
+          &.active {
+            background-color: $blue;
+            border: 1px solid shade($blue, 10%);
+          }
+        }
+        &.label-drafts {
+          &.active {
+            background-color: $grey;
+            border: 1px solid shade($grey, 10%);
+          }
+        }
+        &.label-submitted {
+          &.active {
+            background-color: $orange;
+            border: 1px solid shade($orange, 10%);
+          }
+        }
+        &.label-accepted {
+          &.active {
+            background-color: $green;
+            border: 1px solid shade($green, 10%);
+          }
+        }
+        &.label-processed {
+          &.active {
+            background-color: $purple;
+            border: 1px solid shade($purple, 10%);
+          }
+        }
+        &.label-closed {
+          &.active {
+            background-color: $black;
+            border-color: $black;
+          }
+        }
+        &.active {
+          color: #fff;
+        }
+      }
+    }
+    .ng-isolate-scope {
+      float: right;
+      overflow: hidden;
+    }
+  }
+  .sidebar {
+    float: right;
+    width: $sidebar;
+    .summary {
+      background: #FFF;
+      border-radius: $radius;
+      @include box-shadow(0 1px 0 rgba(0, 0, 0, 0.05));
+      margin-bottom: $gutter;
+    }
+    .status {
+      @include clearfix;
+      padding: 1.5*$gutter/2;
+      .button {
+        float: right;
+        margin: -$gutter/4;
+      }
+    }
+    .expand-pages{
+      background:#f7f8f9;
+      border-top:1px solid #ECEFF1; 
+      padding: 1.5*$gutter/2;
+
+      a{
+        &.button{
+          background: shade($line, 5%);
+          border: 1px solid shade($line, 10%);
+          color: #999;
+          padding:$gutter/5;
+          height: $gutter/2;
+          line-height: $gutter/2;
+          margin-bottom: 3px;
+          @include font-size(12);
+          box-shadow:none;
+          @include transition(all, 0.1s, ease);
+          &:after{
+            @include icon;
+            content: 'n';
+          }
+          &:hover{
+            color:#666;
+            background:$line;
+          }
+        }
+      }
+    }
+    ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        background: tint($light, 60%);
+        border-top: 1px solid $light;
+        color: $grey;
+        @include font-size($smaller);
+        padding: $gutter/2 1.5*$gutter/2;
+        &:last-child {
+          border-radius: 0 0 $radius $radius;
+        }
+        &.active {
+          color: $green;
+          &:before {
+            @include icon;
+            content: 'a';
+            float: right;
+          }
+        }
+      }
+    }
+    .actions {
+      .button {
+        // opacity: 0.6;
+        margin-bottom: $gutter/2;
+        padding: $gutter/2;
+        text-align: center;
+        width: 100%;
+      }
+    }
+    &:hover {
+      .actions .button {
+        opacity: 1;
+      }
+    }
+  }
+  .sidebar + .body {
+    margin-right: $sidebar + $gutter;
+  }
+  .body {
+    &.loading {
+      z-index: 0;
+    }
+  }
+  .controls {
+    border: 1px solid $line;
+    border-radius: $radius;
+    margin-bottom: $gutter;
+    padding: $gutter/2;
+    background: #fff;
+    @include box-sizing(border-box);
+    .control {
+      display: inline-block;
+      margin-right: $gutter;
+      &.add {
+        float: right;
+        margin: 0;
+      }
+      &.sort {
+        .select {
+          margin-left: $gutter/4;
+        }
+      }
+      &.search {
+        position: relative;
+        float: left;
+        input {
+          background: #FFF;
+          border-radius: $gutter;
+          @include box-sizing(border-box);
+          padding-left: 1.5*$gutter;
+        }
+        &:before {
+          @include icon;
+          content: 'f';
+          left: $gutter/2;
+          position: absolute;
+          top: $gutter/5;
+          z-index: 1;
+        }
+      }
+      form {
+        position: relative;
+      }
+      fieldset {
+        background: #fff;
+        position: absolute;
+        right: -2px;
+        top: 2px;
+        border-color: $line;
+        padding: $gutter/2 $gutter $gutter;
+        .control-group {
+          margin-top: $gutter/2;
+          float: right;
+        }
+      }
+    }
+  }
+  .section {
+    background: #FFF;
+    border-radius: $radius;
+    @include box-shadow(0 1px 0 rgba(0, 0, 0, 0.05));
+    margin-bottom: $gutter;
+    padding: 1.5*$gutter/2;
+    .fileupload {
+      .options {
+        .button {
+          &.upload{
+            margin-right: $gutter/2;
+          }
+        }
+      }
+    }
+    .header {
+      .options {
+        float: right;
+      }
+      h2{
+        @include font-size(18);
+        height: 32px;
+        line-height: 32px;
+      }
+    }
+  }
+  .list {
+    float: left;
+    width: 100%;
+    @include box-shadow(0 1px 0 rgba(0, 0, 0, 0.05));
+    h2 {
+      @include font-size($larger);
+      margin-bottom: $gutter/2;
+      .status {
+        margin-left: $gutter/2;
+      }
+    }
+    p {
+      margin-bottom: $gutter/2;
+    }
+    &.history {
+      width: 100%;
+      background: #fff;
+      padding: $gutter/2+5;
+      margin-top: 5px;
+      tbody {
+        tr {
+          cursor: default;
+          &:first-child {
+            border-top: none;
+          }
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+  a.item {
+    background: #FFF;
+    color: inherit;
+    display: block;
+    padding: 1.5*$gutter/2;
+    &:hover {
+      border-color: $blue;
+      & + .item {
+        border-top-color: $blue;
+      }
+    }
+    ul.meta {
+      color: $grey;
+      @include font-size($small);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      text-transform: uppercase;
+      li {
+        display: inline;
+        margin: 0 0 $gutter/2;
+        padding: 0;
+        &:after {
+          content: ' • ';
+        }
+        &:last-child {
+          &:after {
+            content: '';
+          }
+        }
+      }
+    }
+  }
+}
+//login
+.container {
+  &.intro {
+    background: #fff;
+  }
+}
+.container {
+  float: left;
+  width: 100%;
+  padding: $gutter*3.5 0;
+  .main {
+    padding: 0px;
+    h1, h2 {
+      text-align: left;
+    }
+    .hero {
+      width: $width - ($gutter*15+$gutter*4);
+      float: left;
+      border-right: 1px solid $line;
+      min-height: $gutter*14;
+      @include box-sizing(border-box);
+      padding-right: $gutter*2;
+    }
+    p {
+      line-height: $gutter+8;
+    }
+    .login-form {
+      width: $gutter*15+$gutter;
+      float: right;
+      padding-top: $gutter/4+2;
+      #username, #password, #_submit {
+        width: $gutter*15;
+        margin-bottom: $gutter/2;
+        padding: $gutter/2;
+      }
+    }
+  }
+}
+.main {
+  .login-form {
+    .checkbox {
+      margin-bottom: $gutter/2;
+    }
+    label {
+      text-transform: capitalize;
+    }
+    footer {
+      @include font-size($smaller);
+      a {
+        text-transform: capitalize;
+      }
+      .forgot-password {
+        float: right;
+      }
+    }
+    #_submit {
+      width: $gutter*15+$gutter;
+      @include font-size($normal);
+      margin-bottom: 5px;
+    }
+    &.logged {
+      margin-top: 58px;
+      line-height: 27px;
+      .username, .logout, .enter {
+        float: left;
+        width: 100%;
+      }
+      .enter {
+        &:before {
+          @include icon;
+          content: 'h';
+          margin-right: $gutter/4;
+        }
+      }
+      .logout {
+        &:before {
+          @include icon;
+          content: 'l';
+          margin-right: $gutter/4
+        }
+      }
+    }
+  }
+}
+.main {
+  .sidebar {
+    margin-top: 70px;
+  }
+  .body {
+    margin-top: 70px;
+  }
+  .header {
+    h1 {
+      float: left;
+      width: auto;
+    }
+    position:relative;
+    .history {
+      float: left;
+      margin: 17px 0px 0px 15px;
+      text-transform: capitalize;
+      font-size: 12px;
+      }
+    }
+  }
+}
+//pagination
+.pagination {
+  float: left;
+  margin: $gutter/2 0 $gutter*3;
+  span {
+    width: 25px;
+    height: 25px;
+    float: left;
+    text-align: center;
+    line-height: 25px;
+    border-radius: $radius;
+    @include font-size(13);
+    margin-right: $gutter/4;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #fff;
+    a {
+      width: 100%;
+      height: 100%;
+      float: left;
+      line-height: 25px;
+      @include font-size(13);
+      color: $black;
+      @include transition(all, 0.1s, ease);
+      &:hover {
+        color: #a1a1a1;
+      }
+    }
+  }
+  .current {
+    background: $blue;
+    border: 1px solid shade($blue, 10%);
+    color: #fff;
+  }
+}
+
+//error-page
+.error-page {
+  width: $gutter*26;
+  position: fixed;
+  left: 50%;
+  height: auto;
+  min-height: $gutter*10;
+  padding: $gutter;
+  margin-left: -260px;
+  background: #fff;
+  top: 50%;
+  margin-top: -($gutter*6);
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+//table
+.view-study {
+  table {
+    tr {
+      float: left;
+      width: 100%;
+      td {
+        display: inline-block;
+        box-sizing: border-box;
+      }
+    }
+    .select select {
+      float: left;
+      width: 100%;
+    }
+    .form-list {
+      .label {
+        margin: 0px;
+        width: 170px;
+        label {
+          margin: 0px;
+        }
+      }
+      .widget {
+        width: 440px;
+      }
+      p {
+        margin: 0px;
+        font-size: 14px;
+      }
+      table {
+        tr {
+          td {
+            &.form-label {
+              float: left;
+              label {
+                width: 170px;
+              }
+            }
+            &.form-widget {
+              width: 440px;
+              table {
+                td {
+                  margin: 0 0px $gutter/2 0px;
+                  padding: 0px;
+                  &:nth-child(odd) {
+                    margin: 0 $gutter/2 $gutter/2 0px;
+                  }
+                  &:last-child {
+                    width: 415px;
+                    text-align: right;
+                  }
+                  input {
+                    width: 180px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .form-footer {
+      td {
+        padding: 0px;
+        float: right
+      }
+      button {
+        &.cancel {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}
+#ui-datepicker-div {
+  background: #fff;
+  border: 1px solid $line;
+  margin-top: -2px;
+}
+//blankpage
+.blankpage {
+  background: #FFF;
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  padding: 30px;
+  left: 50%;
+  margin-left: -190px;
+  position: absolute;
+  top: 100px;
+  width: 320px;
+  text-transform: capitalize;
+  label {
+    text-transform: capitalize;
+  }
+  input {
+    &[type='text'], &[type='password'], &[type='email'] {
+      margin-bottom: $gutter/2;
+      @include box-sizing(border-box);
+      width: 100%;
+    }
+  }
+  table {
+    tr {
+      border: 0px;
+      td {
+        padding: 0px 0px 0px 0px;
+        float: left;
+        width: 100%;
+      }
+    }
+  }
+  ._register {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+    @include font-size($normal)
+  }
+  .button {
+    &.add {
+      width: $gutter*15+$gutter;
+      @include font-size($normal);
+      margin-bottom: 5px;
+    }
+  }
+}
+
+//adminuser
+.admin{
+  &.table{
+    &.user{
+      background:#fff;
+      float: left;
+      width: 100%;
+      table{
+        @include box-sizing(border-box);
+        padding:$gutter/2+5 $gutter/2;
+        thead{
+          border:1px solid $line;
+        }
+        tr{
+          height: 40px;
+          th{
+            &:first-child{
+              padding:15px $gutter;
+            }
+          }
+          td{
+            &:first-child{
+              padding:15px $gutter;
+            }
+            &:last-child{
+              text-align:right;
+            }
+            .edit{
+              color:$grey;
+              padding:$gutter;
+              &:after{
+                @include icon;
+                content: 'b';        
+              }
+              &:hover{
+                  color:$black!important;
+              }
+            }
+          }
+        }
+        tbody{
+          tr{
+          border:1px solid $line;
+          }
+        }
+      }
+    }
+  }
+}
+
+table{
+  &#account{
+    background:#fff;
+    border:1px solid $line;
+    input[type="email"]:disabled{
+      // border:1px solid $line;
+      // background:#fff;
+    }
+    tr{
+      &:hover{
+        border-top:1px solid $line;
+        border-bottom:1px solid $line;
+      }
+    }
+    td{
+      line-height: 20px;
+    }
+    label{
+      margin:0px;
+      padding:0px $gutter;
+      
+    }
+    #account_roles{
+      input{
+        display: inline-block;
+      }
+      label{
+        display: inline-block;
+        padding: 5px;
+      }
+    }
+  }
+}
